@@ -1,7 +1,6 @@
 import { NS } from '@ns'
 
 export async function main(ns : NS) : Promise<void> {
-    //
-    // const host = ns.args[0]
-    ns.tprint(ns.args)
+    const x = ns.args[0] ? ns.args[0] : 'false'
+    ns.tprint(x)
 }

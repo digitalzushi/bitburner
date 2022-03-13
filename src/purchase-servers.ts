@@ -1,22 +1,17 @@
 import { NS } from '@ns'
 
 export async function main(ns : NS) : Promise<void> {
-    const ram = 1024;
-    const scriptName = "hack.js";
-    const toServer = "joesguns";
-    let i = 0;
-    let newHost;
-
+    const scriptName = 'hack.js'
+    const availableMoney = ns.getServerMoneyAvailable('home')
+    const serverRamCost = ns.getPurchasedServerCost(serverRam)
+    let i = 0
     while (i < ns.getPurchasedServerLimit()) {
-        if (ns.getServerMoneyAvailable("home") > ns.getPurchasedServerCost(ram)) {
-            newHost = ns.purchaseServer("pserv-" + i, ram);
-            await ns.scp(scriptName, newHost);
-            for (let n = 0; i < 4; i++) {
-                await ns.sleep(5000);
-                await ns.exec(scriptName, newHost, 96, toServer, n);
-            }
-            ++i;
+        if ((availableMoney >= serverRamCost)) {
+            ns.run('purchase-server.js', 1, 'pserv-' + i)
+            await ns.scp(scriptName, newHost)
+            ns.run('run-hack-server.js', 1, 'joesguns')
+            ++i
         }
-        await ns.sleep(1000);
+        await ns.sleep(1000)
     }
 }
