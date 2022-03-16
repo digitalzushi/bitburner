@@ -14,9 +14,10 @@ export async function main(ns : NS) : Promise<void> {
         ns.tprintf(`ERROR: ${serverName} already exists!`)
         ns.exit()
     } else {
-        ns.tprint(serverRam)
         if (availableMoney >= serverRamCost) {
             await ns.purchaseServer(serverName, serverRam)
+            await ns.scp('hack.js', serverName, 'home')
+            await ns.run('run-hack-server.js', 1, serverName)
         }
     }
 }
