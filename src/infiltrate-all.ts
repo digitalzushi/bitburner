@@ -6,7 +6,6 @@ export async function main(ns : NS) : Promise<void> {
     for (const server of serverList) {
         // ns.tprint(server)
         ns.run('infiltrate.js', 1, server)
-        // if(ns.fileExists(ns.ls)
         await ns.sleep(100)
     }
 }
